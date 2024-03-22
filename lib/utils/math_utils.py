@@ -1,7 +1,5 @@
-import math
-
 import torch
-
+import math
 
 def flat_to_sym(V, N):
     A = torch.zeros(N, N, dtype=V.dtype, device=V.device)
@@ -9,7 +7,6 @@ def flat_to_sym(V, N):
     A[idxs.unbind()] = V
     A[idxs[1, :], idxs[0, :]] = V
     return A
-
 
 def block_LDL(H, b, check_nan=True):
     n = H.shape[0]
@@ -28,10 +25,9 @@ def block_LDL(H, b, check_nan=True):
 
     if check_nan and L.isnan().any():
         return None
-
+    
     L = L.reshape(n, n)
     return (L, D.to(DL.device))
-
 
 def approx_int_sqrt(n):
     p = int(math.floor(math.sqrt(n)))
@@ -39,10 +35,9 @@ def approx_int_sqrt(n):
         p -= 1
     return (p, n // p)
 
-
 def regularize_H(H, n, sigma_reg):
     H.div_(torch.diag(H).mean())
     idx = torch.arange(n)
-    H[idx, idx] += sigma_reg
+    H[idx,idx] += sigma_reg
     return H
     # return H / torch.diag(H).mean() + sigma_reg * torch.eye(n, device=H.device)

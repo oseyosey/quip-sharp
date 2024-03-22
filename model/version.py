@@ -1,5 +1,5 @@
-MODEL_VERSION = 1
-
+#* SWAPPING between D4 and E8 *#
+MODEL_VERSION = 1 ## Currently hardcoded. 
 
 def check_model_version(test):
     if test != MODEL_VERSION:
